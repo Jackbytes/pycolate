@@ -13,7 +13,8 @@ setup(
     install_requires=[
         'numpy',
         'scipy',
-        'pillow'
+        'pillow',
+        'sympy'
     ],
     long_description=long_description,
     long_description_content_type="text/markdown",

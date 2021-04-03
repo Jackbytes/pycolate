@@ -1,5 +1,5 @@
 # TODO Make interactions possible.
-from Percolation import Percolation
+from pycolate.Percolation import Percolation
 import numpy as np
 from scipy.ndimage import measurements
 import scipy.ndimage as ndimage
@@ -7,17 +7,7 @@ import itertools
 from sympy import solveset, S
 from sympy import Symbol
 from sympy.parsing.sympy_parser import parse_expr
-from sympy import N
-
-generated_arrays = []
-percolated_arrays = []
-
-grain_size = 2
-
-p = [
-    np.reshape(np.array(i), (grain_size, grain_size))
-    for i in itertools.product([0, 1], repeat=grain_size * grain_size)
-]
+from sympy import N, latex
 
 def percolates(config):
 
@@ -63,56 +53,62 @@ def percolates(config):
 
     return percolated
 
-percolated_arrays = []
+def coarse_graining_estimate(grain_size):
 
-passed_arrays = []
+    if grain_size <= 1 or (type(grain_size) != int):
 
-amount_of_each = {}
+        raise ValueError('grain_size must be an interger greater then 1.')
 
-# The percolation step.
-for configuration in p:
+    generated_arrays = []
+    percolated_arrays = []
+    passed_arrays = []
+    amount_of_each = {}
 
-    if percolates(configuration):
+    p = [
+        np.reshape(np.array(i), (grain_size, grain_size))
+        for i in itertools.product([0, 1], repeat=grain_size * grain_size)
+    ]
 
-        percolated_arrays.append(configuration)
+    # The percolation step.
+    for configuration in p:
 
-passed_arrays = percolated_arrays
+        if percolates(configuration):
 
-for current_array in passed_arrays:
+            percolated_arrays.append(configuration)
 
-    number_of_occupied = np.sum(current_array)
+    for current_array in percolated_arrays:
 
-    try:
-        amount_of_each[number_of_occupied] += 1
-    except KeyError:
-        amount_of_each[number_of_occupied] = 1
+        number_of_occupied = np.sum(current_array)
 
-items_in_computation = []
+        try:
+            amount_of_each[number_of_occupied] += 1
+        except KeyError:
+            amount_of_each[number_of_occupied] = 1
 
-for key in amount_of_each:
+    items_in_computation = []
 
-    tmp = "({})*(p**{})*((1-p)**{})".format(
-        amount_of_each[key], key, (grain_size ** 2) - key
-    )
+    for key in amount_of_each:
 
-    items_in_computation.append(tmp)
+        tmp = "({})*(p**{})*((1-p)**{})".format(
+            amount_of_each[key], key, (grain_size ** 2) - key
+        )
 
-    equation_to_solve = "+".join(items_in_computation)
+        items_in_computation.append(tmp)
 
-equation_to_solve = "(" + equation_to_solve + ")"
+        equation_to_solve = "+".join(items_in_computation)
 
-equation_to_solve = equation_to_solve + " - p"
+    equation_to_solve = "(" + equation_to_solve + ")"
 
-print(equation_to_solve)
+    equation_to_solve = equation_to_solve + " - p"
 
-p = Symbol("p")
+    p = Symbol("p")
 
-solutions = solveset(parse_expr(equation_to_solve), p, domain=S.Reals)
+    solutions = solveset(parse_expr(equation_to_solve), p, domain=S.Reals)
 
-for solution in solutions:
+    for solution in solutions:
 
-    tmp = N(solution)
+        tmp = N(solution)
 
-    if tmp < 1 and tmp > 0:
+        if tmp < 1 and tmp > 0:
 
-        print(tmp)
+            return(tmp)
