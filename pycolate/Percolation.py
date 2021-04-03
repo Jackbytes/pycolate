@@ -1,11 +1,10 @@
 #TODO Add comments.
 
 import numpy as np
-from grid_engine import grid
+from pycolate.grid_engine import grid
 from colorsys import hsv_to_rgb
 from scipy.ndimage import measurements
 import scipy.ndimage as ndimage
-from pycolate.grid_engine import grid
 import PIL
 
 

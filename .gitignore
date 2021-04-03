@@ -130,3 +130,6 @@ dmypy.json
 
 #venv
 pycolate-env/
+.DS_Store
+.vscode/
+.DS_Store

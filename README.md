@@ -1,6 +1,6 @@
 # pycolate :coffee:
 
-![Banner](https://github.com/Jackbytes/pycolate/blob/main/images/cover_image.png)
+![Banner](https://raw.githubusercontent.com/Jackbytes/pycolate/main/images/cover_image.png)
 
 A python implementation of site percolation, generates datasets and illustrations.
 

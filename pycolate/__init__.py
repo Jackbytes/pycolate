@@ -1,1 +1,1 @@
-import pycolate.Percolation
+from pycolate.Percolation import Percolation, PercolationExperiment
