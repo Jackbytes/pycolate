@@ -86,7 +86,7 @@ class Percolation:
 
         self.labeledConfig = labeledConfig
 
-    def generate_graphics(self):
+    def generate_graphics(self, site_size=10):
 
         labelsToCheck = np.unique(self.labeledConfig)
 
@@ -120,7 +120,7 @@ class Percolation:
 
         rulebook[0] = "white"
 
-        self.graphics = grid(self.labeledConfig, rulebook, 50)
+        self.graphics = grid(self.labeledConfig, rulebook, site_size)
 
     def display(self):
 
