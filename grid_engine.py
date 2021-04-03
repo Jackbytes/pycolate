@@ -1,15 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jun 26 15:18:21 2020
 
-@author: Study
-"""
-"""
-This class takes a vector init_config = config[x][y]. The bottom left is 1,1. 
-
-"""
-
-
+#TODO Add comments.
 from PIL import Image, ImageDraw, ImageColor, ImageFont
 import glob
 from random import randint, choice

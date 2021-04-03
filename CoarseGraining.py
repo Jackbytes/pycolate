@@ -1,4 +1,4 @@
-# This is a sample Python script.
+# TODO Make interactions possible.
 from Percolation3 import Percolation
 import numpy as np
 from scipy.ndimage import measurements
@@ -13,7 +13,6 @@ generated_arrays = []
 percolated_arrays = []
 
 grain_size = 2
-cells_to_check = 1.0
 
 p = [
     np.reshape(np.array(i), (grain_size, grain_size))
@@ -63,22 +62,6 @@ def percolates(config):
             break
 
     return percolated
-
-def horizonial_interaction(*grains):
-
-    combos = [np.hstack(duo) for duo in list(itertools.combinations(*grains, 2))]
-
-    duo = np.hstack(grains)
-
-    interaction_area = duo[:, 1:3]
-
-    if percolates(interaction_area):
-
-        return True
-
-    else:
-
-        return False
 
 percolated_arrays = []
 

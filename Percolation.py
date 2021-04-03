@@ -1,3 +1,5 @@
+#TODO Add comments.
+
 import numpy as np
 from grid_engine import grid
 from colorsys import hsv_to_rgb
@@ -8,7 +10,7 @@ import PIL
 
 
 class Percolation:
-    def __init__(self, width, height, occupationProb):
+    def __init__(self, height, width, occupationProb):
 
         self.config = np.zeros((height, width), dtype=int)
 
@@ -173,14 +175,15 @@ class PercolationExperiment:
 
         print(self.data)
 
+if __name__=='__main__':
 
-# perc = Percolation(100, 100, 0.6)
+    perc = Percolation(300, 100, 0.596)
 
-# perc.cluster_find()
+    perc.cluster_find()
 
-# perc.generate_graphics()
+    perc.generate_graphics()
 
-# perc.display()
+    perc.save('./images/cover_image.png')
 
 # experi = PercolationExperiment(10, 'mean cluster size', 'percolated cluster size')
 
