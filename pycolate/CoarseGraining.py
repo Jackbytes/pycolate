@@ -1,5 +1,5 @@
 # TODO Make interactions possible.
-from Percolation3 import Percolation
+from Percolation import Percolation
 import numpy as np
 from scipy.ndimage import measurements
 import scipy.ndimage as ndimage
