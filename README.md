@@ -4,8 +4,8 @@
 
 A python implementation of site percolation, generates datasets and illustrations.
 
-##Aims.
+## Aims.
 
 This project primarily generates datasets and illustrations from square lattice site percolation. There is an auxillary program which carries out critical probability estimation using coarse graining with possible interactions.
 
-##How to.
+## How to.
