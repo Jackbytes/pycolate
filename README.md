@@ -1,4 +1,4 @@
-# pycolate
+# pycolate :coffee:
 
 ![Banner](/images/cover_image.png)
 
