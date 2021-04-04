@@ -142,7 +142,7 @@ class Percolation:
 
             rulebook = {0: "white"}
 
-            rulebook[self.percolLabel] = 'pink'
+            rulebook[self.percolLabel] = "pink"
 
             self.graphics = grid(percolating_cluster_config, rulebook, self.site_size)
 
@@ -151,18 +151,20 @@ class Percolation:
     def display(self):
 
         if not self.found_clusters or not self.generated_graphics:
-            
-            raise Exception('Run cluster_find and generate_graphics before attempting to display.')
+
+            raise Exception(
+                "Run cluster_find and generate_graphics before attempting to display."
+            )
 
         self.graphics.display()
 
     def save(self, path):
 
-        if not self.found_clusters:
-            self.cluster_find()
+        if not self.found_clusters or not self.generated_graphics:
 
-        if not self.generated_graphics:
-            self.generate_graphics()
+            raise Exception(
+                "Run cluster_find and generate_graphics before attempting to save."
+            )
 
         self.graphics.image.save("{}".format(path))
 
@@ -188,7 +190,9 @@ class Percolation:
         if type(new_value) != bool:
             raise TypeError("only_display_percolating must be boolean.")
         if not self.found_clusters:
-            raise Exception('Run cluster_find before specifying only_display_percolating.')
+            raise Exception(
+                "Run cluster_find before specifying only_display_percolating."
+            )
         elif not self.percolated and new_value == True:
             raise ValueError(
                 "Cannot only display percolating cluster, self.percolated = False."
@@ -254,8 +258,8 @@ if __name__ == "__main__":
 
     perc.display()
 
-    # exper = PercolationExperiment("mean cluster size", "percolated cluster size")
+    exper = PercolationExperiment("mean cluster size", "percolated cluster size")
 
-    # exper.run(50, 50, 50, 0.6)
+    exper.run(50, 50, 50, 0.6)
 
-    # print(exper.data)
+    print(exper.data)
