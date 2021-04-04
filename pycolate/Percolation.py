@@ -23,6 +23,8 @@ class Percolation:
 
         self.percolated = False
 
+        self.generated_graphics = False
+
         prob = occupationProb
 
         self.config = np.random.choice([0, 1], p=[1 - prob, prob], size=(height, width))
@@ -85,6 +87,8 @@ class Percolation:
 
         self.labeledConfig = labeledConfig
 
+        self.foundClusters = True
+
     def generate_graphics(self, site_size=10):
 
         labelsToCheck = np.unique(self.labeledConfig)
@@ -121,11 +125,25 @@ class Percolation:
 
         self.graphics = grid(self.labeledConfig, rulebook, site_size)
 
+        self.generated_graphics = True
+
     def display(self):
+
+        if not self.foundClusters: 
+            self.cluster_find()
+
+        if not self.generated_graphics:
+            self.generate_graphics()
 
         self.graphics.display()
 
     def save(self, path):
+
+        if not self.foundClusters: 
+            self.cluster_find()
+
+        if not self.generated_graphics:
+            self.generate_graphics()
 
         self.graphics.image.save("{}".format(path))
 
