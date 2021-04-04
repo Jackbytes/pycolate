@@ -8,7 +8,7 @@ A python implementation of site percolation, generates datasets and illustration
 
 This project primarily generates datasets and illustrations from square lattice site percolation. There is an auxillary program which carries out critical probability estimation using coarse graining with possible interactions.
 
-## How to.
+## Installation.
 
 1. Install the latest version of pycolate:
 ```python
@@ -18,7 +18,7 @@ pip install pycolate
 ```python
 import pycolate
 ```
-### Creating illustrations.
+## Creating illustrations.
 
 The `pycolate.Percolation` class is used for creating a single instance of percolation. It takes the following arguments:
 ```python
@@ -64,7 +64,7 @@ perc.display()
 perc.save('PATH')
 ```
 To only display the percolating cluster one can 
-### Running experiments.
+## Running experiments.
 One may not be interested in illustrations and just want numeric data. We can compute many different properties by running the `Percolation.cluster_find()` method. Once this has been run there are many properties one can ask for:
 ### Properties of the Percolation class.
 Property | Explanation |
