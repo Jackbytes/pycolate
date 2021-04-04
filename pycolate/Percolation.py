@@ -16,6 +16,10 @@ class Percolation:
 
         self._site_size = 10
 
+        self.percolated = False
+
+        self._only_display_percolating = False
+
         self.clusters = []
 
         self.found_clusters = False
@@ -90,51 +94,65 @@ class Percolation:
 
     def generate_graphics(self):
 
-        labelsToCheck = np.unique(self.labeledConfig)
+        if not self.only_display_percolating:
 
-        for label in labelsToCheck:
+            labelsToCheck = np.unique(self.labeledConfig)
 
-            if label != 0:
+            for label in labelsToCheck:
 
-                coordsOfPoints = np.transpose(np.where(self.labeledConfig == label))
+                if label != 0:
 
-                self.clusters.append(coordsOfPoints)
+                    coordsOfPoints = np.transpose(np.where(self.labeledConfig == label))
 
-        tmp = np.unique(self.labeledConfig)
+                    self.clusters.append(coordsOfPoints)
 
-        labelsToDraw = np.delete(tmp, np.where(tmp == 0))
+            tmp = np.unique(self.labeledConfig)
 
-        clusterNum = len(self.clusters)
+            labelsToDraw = np.delete(tmp, np.where(tmp == 0))
 
-        hues = np.linspace(1, 350, num=clusterNum + 1)
+            clusterNum = len(self.clusters)
 
-        shuffle(hues)
+            hues = np.linspace(1, 350, num=clusterNum + 1)
 
-        rulebook = {0: "white"}
+            shuffle(hues)
 
-        j = 1
+            rulebook = {0: "white"}
 
-        for i in labelsToDraw:
+            j = 1
 
-            rulebook[i] = "hsv({},{}%,{}%)".format(
-                hues[j], np.random.uniform(20, 60), np.random.uniform(50, 100)
+            for i in labelsToDraw:
+
+                rulebook[i] = "hsv({},{}%,{}%)".format(
+                    hues[j], np.random.uniform(20, 60), np.random.uniform(50, 100)
+                )
+
+                j += 1
+
+            rulebook[0] = "white"
+
+            self.graphics = grid(self.labeledConfig, rulebook, self.site_size)
+
+        else:
+
+            percolating_cluster_config = np.where(
+                self.labeledConfig == self.percolLabel, self.labeledConfig, 0
             )
 
-            j += 1
+            print(percolating_cluster_config)
 
-        rulebook[0] = "white"
+            rulebook = {0: "white"}
 
-        self.graphics = grid(self.labeledConfig, rulebook, self.site_size)
+            rulebook[self.percolLabel] = 'pink'
+
+            self.graphics = grid(percolating_cluster_config, rulebook, self.site_size)
 
         self.generated_graphics = True
 
     def display(self):
 
-        if not self.found_clusters:
-            self.cluster_find()
-
-        if not self.generated_graphics:
-            self.generate_graphics()
+        if not self.found_clusters or not self.generated_graphics:
+            
+            raise Exception('Run cluster_find and generate_graphics before attempting to display.')
 
         self.graphics.display()
 
@@ -154,11 +172,29 @@ class Percolation:
 
     @site_size.setter
     def site_size(self, new_size):
+
         if type(new_size) != int:
             raise TypeError("The site_site must be a postive integer.")
         if not new_size >= 1:
             raise ValueError("The site_site must be a positive integer.")
         self._site_size = new_size
+
+    @property
+    def only_display_percolating(self):
+        return self._only_display_percolating
+
+    @only_display_percolating.setter
+    def only_display_percolating(self, new_value):
+        if type(new_value) != bool:
+            raise TypeError("only_display_percolating must be boolean.")
+        if not self.found_clusters:
+            raise Exception('Run cluster_find before specifying only_display_percolating.')
+        elif not self.percolated and new_value == True:
+            raise ValueError(
+                "Cannot only display percolating cluster, self.percolated = False."
+            )
+        else:
+            self._only_display_percolating = new_value
 
 
 class PercolationExperiment:
@@ -206,14 +242,20 @@ class PercolationExperiment:
 
 if __name__ == "__main__":
 
-    perc = Percolation(100, 100, 0.596)
+    perc = Percolation(100, 100, 0.7)
 
-    perc.site_size = 3
+    perc.site_size = 2
+
+    perc.cluster_find()
+
+    perc.only_display_percolating = True
+
+    perc.generate_graphics()
 
     perc.display()
 
-    exper = PercolationExperiment("mean cluster size", "percolated cluster size")
+    # exper = PercolationExperiment("mean cluster size", "percolated cluster size")
 
-    exper.run(50, 50, 50, 0.6)
+    # exper.run(50, 50, 50, 0.6)
 
-    print(exper.data)
+    # print(exper.data)

@@ -24,6 +24,10 @@ The `pycolate.Percolation` class is used for creating a single instance of perco
 ```python
 Perc = Percolation(width, height, occupation probability)
 ```
+We find the clusters by running:
+ ```python
+ Perc.cluster_find()
+ ````
 We display the illustration in a window as so:
 ```python
 ...
@@ -39,7 +43,8 @@ So to generate an illustration of a 50x50 grid where each square has a 0.6 chanc
 import pycolate
 
 perc = pycolate.Percolation(50,50,0.6)
-
+perc.cluster_find()
+perc.generate_graphics()
 perc.display() 
 perc.save('PATH')
 ```
@@ -52,13 +57,15 @@ import pycolate
 perc = pycolate.Percolation(1000,1000,0.6)
 
 perc.site_site = 1
-
+perc.cluster_find()
+perc.generate_graphics()
 perc.display() 
 
 perc.save('PATH')
 ```
+To only display the percolating cluster one can 
 ### Running experiments.
-One may not be interested in illustrations and just want numeric data. We can compute many different properties by running the `Percolation.cluster_find()` method. One should note that `Percolation.display()` also runs this method behind the scenes. Once this has been run there are many properties one can ask for:
+One may not be interested in illustrations and just want numeric data. We can compute many different properties by running the `Percolation.cluster_find()` method. Once this has been run there are many properties one can ask for:
 ### Properties of the Percolation class.
 Property | Explanation |
 --- | --- |
