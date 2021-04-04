@@ -1,5 +1,3 @@
-#TODO Add comments.
-
 import numpy as np
 from pycolate.grid_engine import grid
 from colorsys import hsv_to_rgb
@@ -29,7 +27,7 @@ class Percolation:
         self.config = np.random.choice([0, 1], p=[1 - prob, prob], size=(width, height))
 
     def cluster_find(self):
-        
+
         self.percolated = False
 
         self.percolated_size = 0
@@ -132,7 +130,7 @@ class Percolation:
 
     def display(self):
 
-        if not self.found_clusters: 
+        if not self.found_clusters:
             self.cluster_find()
 
         if not self.generated_graphics:
@@ -142,7 +140,7 @@ class Percolation:
 
     def save(self, path):
 
-        if not self.found_clusters: 
+        if not self.found_clusters:
             self.cluster_find()
 
         if not self.generated_graphics:
@@ -155,13 +153,13 @@ class Percolation:
         return self._site_size
 
     @site_size.setter
-    def site_size(self,new_size):
+    def site_size(self, new_size):
         if type(new_size) != int:
-            raise TypeError('The site_site must be a postive integer.')
+            raise TypeError("The site_site must be a postive integer.")
         if not new_size >= 1:
-            raise ValueError('The site_site must be a positive integer.')
+            raise ValueError("The site_site must be a positive integer.")
         self._site_size = new_size
-    
+
 
 class PercolationExperiment:
     def __init__(self, *args):
@@ -205,12 +203,17 @@ class PercolationExperiment:
             if self.collect_sizes:
                 self.data["cluster sizes"] += temp_perc.sizes.tolist()
 
-        print(self.data)
 
-if __name__=='__main__':
+if __name__ == "__main__":
 
     perc = Percolation(100, 100, 0.596)
 
     perc.site_size = 3
 
     perc.display()
+
+    exper = PercolationExperiment("mean cluster size", "percolated cluster size")
+
+    exper.run(50, 50, 50, 0.6)
+
+    print(exper.data)

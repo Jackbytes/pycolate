@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="pycolate",
-    version="0.0.31",
+    version="0.0.32",
     author="Jack Harrington",
     author_email="jackjharrington@icloud.com",
     description="Generates site percolation data and illustrations.",

@@ -1,4 +1,4 @@
-# pycolate :coffee:
+# pycolate ☕
 
 ![Banner](https://raw.githubusercontent.com/Jackbytes/pycolate/main/images/cover_image.png)
 
@@ -57,7 +57,9 @@ perc.display()
 
 perc.save('PATH')
 ```
-### The Percolation Class
+### Running experiments.
+One may not be interested in illustrations and just want numeric data. We can compute many different properties by running the `Percolation.cluster_find()` method. One should note that `Percolation.display()` also runs this method behind the scenes. Once this has been run there are many properties one can ask for:
+### Properties of the Percolation class.
 Property | Explanation |
 --- | --- |
 mean_cluster_size | The mean cluster size, excluding the percolating cluster. |
