@@ -5,6 +5,7 @@ from pycolate.grid_engine import grid
 from colorsys import hsv_to_rgb
 from scipy.ndimage import measurements
 import scipy.ndimage as ndimage
+from random import shuffle
 import PIL
 
 
@@ -19,9 +20,7 @@ class Percolation:
 
         self.clusters = []
 
-        self.foundClusters = False
-
-        self.percolated = False
+        self.found_clusters = False
 
         self.generated_graphics = False
 
@@ -30,6 +29,10 @@ class Percolation:
         self.config = np.random.choice([0, 1], p=[1 - prob, prob], size=(width, height))
 
     def cluster_find(self):
+        
+        self.percolated = False
+
+        self.percolated_size = 0
 
         labeledConfig, num = measurements.label(self.config)
 
@@ -38,8 +41,6 @@ class Percolation:
         self.sizeConfig = sizes[labeledConfig]
 
         sizes = sizes[sizes != 0]
-
-        self.percolatedSize = 0
 
         labels = np.unique(labeledConfig)
 
@@ -73,21 +74,21 @@ class Percolation:
 
         if self.percolated:
 
-            self.percolatedSize = len(labeledConfig[labeledConfig == self.percolLabel])
+            self.percolated_size = len(labeledConfig[labeledConfig == self.percolLabel])
 
-            self.sizes = sizes[sizes != self.percolatedSize]
+            self.sizes = sizes[sizes != self.percolated_size]
 
-            self.meanClusterSize = np.mean(self.sizes)
+            self.mean_cluster_size = np.mean(self.sizes)
 
         if not self.percolated:
 
-            self.meanClusterSize = np.mean(sizes)
+            self.mean_cluster_size = np.mean(sizes)
 
-            self.sizes = sizes[sizes != self.percolatedSize]
+            self.sizes = sizes[sizes != self.percolated_size]
 
         self.labeledConfig = labeledConfig
 
-        self.foundClusters = True
+        self.found_clusters = True
 
     def generate_graphics(self):
 
@@ -107,7 +108,9 @@ class Percolation:
 
         clusterNum = len(self.clusters)
 
-        hues = np.linspace(1, 360, num=clusterNum + 1)
+        hues = np.linspace(1, 350, num=clusterNum + 1)
+
+        shuffle(hues)
 
         rulebook = {0: "white"}
 
@@ -116,7 +119,7 @@ class Percolation:
         for i in labelsToDraw:
 
             rulebook[i] = "hsv({},{}%,{}%)".format(
-                hues[j], np.random.uniform(20, 70), np.random.uniform(30, 100)
+                hues[j], np.random.uniform(20, 60), np.random.uniform(50, 100)
             )
 
             j += 1
@@ -129,7 +132,7 @@ class Percolation:
 
     def display(self):
 
-        if not self.foundClusters: 
+        if not self.found_clusters: 
             self.cluster_find()
 
         if not self.generated_graphics:
@@ -139,7 +142,7 @@ class Percolation:
 
     def save(self, path):
 
-        if not self.foundClusters: 
+        if not self.found_clusters: 
             self.cluster_find()
 
         if not self.generated_graphics:
@@ -196,9 +199,9 @@ class PercolationExperiment:
             temp_perc.cluster_find()
 
             if self.collect_perc_size:
-                self.data["percolated cluster sizes"].append(temp_perc.percolatedSize)
+                self.data["percolated cluster sizes"].append(temp_perc.percolated_size)
             if self.collect_mean:
-                self.data["mean cluster sizes"].append(temp_perc.meanClusterSize)
+                self.data["mean cluster sizes"].append(temp_perc.mean_cluster_size)
             if self.collect_sizes:
                 self.data["cluster sizes"] += temp_perc.sizes.tolist()
 
@@ -206,10 +209,8 @@ class PercolationExperiment:
 
 if __name__=='__main__':
 
-    perc = Percolation(300, 100, 0.596)
+    perc = Percolation(100, 100, 0.596)
 
-    perc.site_size = 1
-
-    print(perc.site_size)
+    perc.site_size = 3
 
     perc.display()

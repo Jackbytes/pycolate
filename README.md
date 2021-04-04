@@ -2,8 +2,6 @@
 
 ![Banner](https://raw.githubusercontent.com/Jackbytes/pycolate/main/images/cover_image.png)
 
-# pip install pycolate
-
 A python implementation of site percolation, generates datasets and illustrations.
 
 ## Aims.
@@ -59,3 +57,10 @@ perc.display()
 
 perc.save('PATH')
 ```
+### The Percolation Class
+Property | Explanation |
+--- | --- |
+mean_cluster_size | The mean cluster size, excluding the percolating cluster. |
+sizes | A list of all the cluster sizes, excluding the percolating cluster. |
+percolated_size | The size of the percolating cluster. |
+percolated | A boolean. True if a percolating cluster formed. False if not |
