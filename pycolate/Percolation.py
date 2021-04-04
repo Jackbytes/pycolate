@@ -1,3 +1,5 @@
+# python3 setup.py bdist_wheel
+# twine upload dist/*
 import numpy as np
 from pycolate.grid_engine import grid
 from colorsys import hsv_to_rgb
@@ -137,8 +139,6 @@ class Percolation:
             percolating_cluster_config = np.where(
                 self.labeledConfig == self.percolLabel, self.labeledConfig, 0
             )
-
-            print(percolating_cluster_config)
 
             rulebook = {0: "white"}
 

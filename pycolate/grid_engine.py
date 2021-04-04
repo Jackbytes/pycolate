@@ -1,5 +1,4 @@
-
-#TODO Add comments.
+# Will eventually be a seperate package.
 from PIL import Image, ImageDraw, ImageColor, ImageFont
 import glob
 from random import randint, choice
@@ -105,7 +104,7 @@ class grid:
 
 
 def gridMaker(folderpath, width, height, offset, resolution, name):
-    """ This function produces a grid of images from a folder of seperate images. The images must be sqyare"""
+    """ This function produces a grid of images from a folder of seperate images. The images must be square"""
 
     imageNames = [i for i in glob.glob("{}/*.png".format(folderpath))]
 
