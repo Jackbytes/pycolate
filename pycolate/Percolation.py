@@ -9,13 +9,13 @@ import PIL
 
 
 class Percolation:
-    def __init__(self, height, width, occupationProb):
-
-        self.config = np.zeros((height, width), dtype=int)
+    def __init__(self, width, height, occupationProb):
 
         self.height = height
 
         self.width = width
+
+        self._site_size = 10
 
         self.clusters = []
 
@@ -27,7 +27,7 @@ class Percolation:
 
         prob = occupationProb
 
-        self.config = np.random.choice([0, 1], p=[1 - prob, prob], size=(height, width))
+        self.config = np.random.choice([0, 1], p=[1 - prob, prob], size=(width, height))
 
     def cluster_find(self):
 
@@ -89,7 +89,7 @@ class Percolation:
 
         self.foundClusters = True
 
-    def generate_graphics(self, site_size=10):
+    def generate_graphics(self):
 
         labelsToCheck = np.unique(self.labeledConfig)
 
@@ -116,14 +116,14 @@ class Percolation:
         for i in labelsToDraw:
 
             rulebook[i] = "hsv({},{}%,{}%)".format(
-                hues[j], np.random.uniform(50, 70), np.random.uniform(50, 100)
+                hues[j], np.random.uniform(20, 70), np.random.uniform(30, 100)
             )
 
             j += 1
 
         rulebook[0] = "white"
 
-        self.graphics = grid(self.labeledConfig, rulebook, site_size)
+        self.graphics = grid(self.labeledConfig, rulebook, self.site_size)
 
         self.generated_graphics = True
 
@@ -147,6 +147,18 @@ class Percolation:
 
         self.graphics.image.save("{}".format(path))
 
+    @property
+    def site_size(self):
+        return self._site_size
+
+    @site_size.setter
+    def site_size(self,new_size):
+        if type(new_size) != int:
+            raise TypeError('The site_site must be a postive integer.')
+        if not new_size >= 1:
+            raise ValueError('The site_site must be a positive integer.')
+        self._site_size = new_size
+    
 
 class PercolationExperiment:
     def __init__(self, *args):
@@ -196,12 +208,8 @@ if __name__=='__main__':
 
     perc = Percolation(300, 100, 0.596)
 
-    perc.cluster_find()
+    perc.site_size = 1
 
-    perc.generate_graphics()
+    print(perc.site_size)
 
-    perc.save('./images/cover_image.png')
-
-# experi = PercolationExperiment(10, 'mean cluster size', 'percolated cluster size')
-
-# experi.run(10,30,30,0.6)
+    perc.display()
