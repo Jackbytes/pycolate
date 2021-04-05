@@ -53,30 +53,39 @@ def percolates(config):
 
     return percolated
 
-def coarse_graining_estimate(grain_size):
+def majority(config):
+    
+    if np.sum(config) > (config.size / 2):
+
+        return True
+    
+    else:
+
+        return False
+
+def coarse_graining_estimate(grain_size, method=percolates):
 
     if grain_size <= 1 or (type(grain_size) != int):
 
         raise ValueError('grain_size must be an interger greater then 1.')
 
     generated_arrays = []
-    percolated_arrays = []
     passed_arrays = []
     amount_of_each = {}
 
+    #There must be a faster way of generating this array?
     p = [
         np.reshape(np.array(i), (grain_size, grain_size))
         for i in itertools.product([0, 1], repeat=grain_size * grain_size)
     ]
 
-    # The percolation step.
     for configuration in p:
 
-        if percolates(configuration):
+        if method(configuration):
 
-            percolated_arrays.append(configuration)
+            passed_arrays.append(configuration)
 
-    for current_array in percolated_arrays:
+    for current_array in passed_arrays:
 
         number_of_occupied = np.sum(current_array)
 
@@ -112,3 +121,10 @@ def coarse_graining_estimate(grain_size):
         if tmp < 1 and tmp > 0:
 
             return(tmp)
+
+
+if __name__ == '__main__':
+
+    result = coarse_graining_estimate(5,method=majority)
+
+    print(result)

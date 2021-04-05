@@ -161,7 +161,7 @@ class Percolation:
         if not self.found_clusters or not self.generated_graphics:
 
             raise Exception(
-                "Run cluster_find and generate_graphics before attempting to display."
+                "Run cluster_find and generate graphics before attempting to display."
             )
 
         self.graphics.display()
