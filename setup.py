@@ -5,25 +5,21 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="pycolate",
-    version="0.0.4",
+    version="0.0.41",
     author="Jack Harrington",
     author_email="jackjharrington@icloud.com",
     description="Generates site percolation data and illustrations.",
-    packages=['pycolate'],
-    install_requires=[
-        'numpy',
-        'scipy',
-        'pillow',
-        'sympy'
-    ],
+    packages=["pycolate"],
+    install_requires=["numpy", "scipy", "pillow", "sympy"],
     long_description=long_description,
     long_description_content_type="text/markdown",
-    classifiers = [
-        'Development Status :: 3 - Alpha',
-        'Intended Audience :: Science/Research',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Topic :: Scientific/Engineering :: Mathematics',
-        'Topic :: Scientific/Engineering :: Visualization',
-        'Topic :: Scientific/Engineering :: Physics']
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "Intended Audience :: Science/Research",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Topic :: Scientific/Engineering :: Mathematics",
+        "Topic :: Scientific/Engineering :: Visualization",
+        "Topic :: Scientific/Engineering :: Physics",
+    ],
 )

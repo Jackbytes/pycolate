@@ -31,6 +31,7 @@ We find the clusters by running:
 We display the illustration in a window as so:
 ```python
 ...
+Perc.pretty_clusters() #OR Perc.simple_clusters() or Perc.only_percolating_cluster()
 Perc.display()
 ```
 To save the illsutration we run:
@@ -44,11 +45,11 @@ import pycolate
 
 perc = pycolate.Percolation(50,50,0.6)
 perc.cluster_find()
-perc.generate_graphics()
+perc.pretty_clusters()
 perc.display() 
 perc.save('PATH')
 ```
-The default size for a square is 10 by 10 pixels. To adjust this one can change the `Percolation.site_size` prior to running `Percolation.display()`.
+The default size for a square is 10 by 10 pixels. To adjust this one can change the `Percolation.site_size` prior to running any methods.
 
  If we were running a large simulation we may want the sites to only be 1 pixel each, so we would run the following:
 ```python
@@ -58,12 +59,16 @@ perc = pycolate.Percolation(1000,1000,0.6)
 
 perc.site_site = 1
 perc.cluster_find()
-perc.generate_graphics()
+perc.pretty_clusters()
 perc.display() 
-
 perc.save('PATH')
 ```
-To only display the percolating cluster one can 
+To only display the percolating cluster in the illustration one can use `only_percolating_cluster('your_color')` instead of `pretty_clusters()` to create an illustration of the percolating cluster in the color 'your_color' (Must be a valid PIL color).
+
+To display all the clusters in the same colour one can use `simple_clusters()` instead of `pretty_clusters()`. 
+
+By default both of these methods use 'hotpink' as the default color if no color argument is given.
+
 ## Running experiments.
 One may not be interested in illustrations and just want numeric data. We can compute many different properties by running the `Percolation.cluster_find()` method. Once this has been run there are many properties one can ask for:
 ### Properties of the Percolation class.
