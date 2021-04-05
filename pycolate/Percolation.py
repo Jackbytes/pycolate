@@ -8,6 +8,7 @@ import scipy.ndimage as ndimage
 from random import shuffle
 import PIL
 
+CRIT_PROB = 0.59274621
 
 class Percolation:
     def __init__(self, width, height, occupationProb):
