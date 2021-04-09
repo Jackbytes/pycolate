@@ -11,15 +11,27 @@ class grid:
 
         width = len(initconfig)
 
-        height = len(initconfig[0])
+        try:
+
+            height = len(initconfig[0])
+
+        except TypeError:
+
+            height = 1
 
         self.grid_draw(width, height, resolution, grid=grid)
 
         for x in range(0, len(initconfig)):
 
-            for y in range(0, len(initconfig[x])):
+            for y in range(0, height):
 
-                self.block(x + 1, y + 1, rulebook[(initconfig[x])[y]])
+                try:
+
+                    self.block(x + 1, y + 1, rulebook[(initconfig[x])[y]])
+
+                except TypeError:
+
+                    self.block(x + 1, 1, rulebook[initconfig[x]])
 
     def grid_draw(self, width, height, block_size, grid=False):
 
@@ -98,9 +110,14 @@ class grid:
 
         for x in range(0, len(config)):
 
-            for y in range(0, len(config[x])):
+            for y in range(0, self.height):
 
-                self.block(x + 1, y + 1, self.rulebook[(config[x])[y]])
+                try:
+                    self.block(x + 1, y + 1, self.rulebook[(config[x])[y]])
+
+                except TypeError:
+
+                    self.block(x + 1, 1, self.rulebook[config[x]])
 
 
 def gridMaker(folderpath, width, height, offset, resolution, name):
