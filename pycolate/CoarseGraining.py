@@ -9,9 +9,59 @@ from sympy import Symbol
 from sympy.parsing.sympy_parser import parse_expr
 from sympy import N, latex
 
-def percolates(config):
+def hpercolates(config):
 
-    percolated = False
+    labeledConfig, = measurements.label(config)
+
+    sizes = sizes[sizes != 0]
+
+    labels = np.unique(labeledConfig)
+
+    labelsToCheck = labels[labels != 0]
+
+    leftColumn = labeledConfig[:, 0]
+
+    rightColumn = labeledConfig[:, -1]
+
+    for label in labelsToCheck:
+
+        left = label in leftColumn
+
+        right = label in rightColumn
+
+        if (bottom and top):
+
+            break
+
+    return percolated
+
+def vpercolates(config):
+
+    labeledConfig, = measurements.label(config)
+
+    sizes = sizes[sizes != 0]
+
+    labels = np.unique(labeledConfig)
+
+    labelsToCheck = labels[labels != 0]
+
+    topRow = labeledConfig[0]
+
+    bottomRow = labeledConfig[-1]
+
+    for label in labelsToCheck:
+
+        bottom = label in bottomRow
+
+        top = label in topRow
+
+        if (bottom and top):
+
+            break
+
+    return percolated
+
+def percolates(config):
 
     labeledConfig, num = measurements.label(config)
 
@@ -20,8 +70,6 @@ def percolates(config):
     sizeConfig = sizes[labeledConfig]
 
     sizes = sizes[sizes != 0]
-
-    percolatedSize = 0
 
     labels = np.unique(labeledConfig)
 
@@ -47,8 +95,6 @@ def percolates(config):
 
         if (left and right) or (bottom and top):
 
-            percolated = True
-
             break
 
     return percolated
@@ -63,7 +109,27 @@ def majority(config):
 
         return False
 
-def coarse_graining_estimate(grain_size, method=percolates):
+def grains_connect(configurations):
+    
+    """Checks if a series of grains connect on their edges.
+    """
+
+    grain_size = configurations[0]
+    num_of_grains = len[configurations]
+    stacked_arrays = np.hstack(configurations)
+
+    for i in range(1, num_of_grains):
+
+
+
+
+    #array[:,x:y]
+
+    
+
+
+
+def coarse_graining_estimate(grain_size : int, method=percolates):
 
     if grain_size <= 1 or (type(grain_size) != int):
 
@@ -121,6 +187,7 @@ def coarse_graining_estimate(grain_size, method=percolates):
         if tmp < 1 and tmp > 0:
 
             return(tmp)
+
 
 
 if __name__ == '__main__':
