@@ -5,11 +5,11 @@ import numpy as np
 class MeanFieldSandpile:
     def __init__(
         self,
-        initconfig,
-        theshold,
-        dissipation_amount,
-        graphics=True,
-        rulebook=None,
+        initconfig: list,
+        theshold: int,
+        dissipation_amount: int,
+        graphics: bool = True,
+        rulebook: dict = None,
     ):
 
         self._theshold = theshold
@@ -46,7 +46,7 @@ class MeanFieldSandpile:
 
         self.__debug("Inital config:")
 
-    def _drive_pile(self, ignore_list=[], number_to_drive=1):
+    def _drive_pile(self, ignore_list: list = [], number_to_drive: int = 1):
 
         rng = np.random.default_rng()
         site_to_drive = rng.integers(0, len(self._config) - 1)
@@ -66,7 +66,7 @@ class MeanFieldSandpile:
         else:
             self.__to_tople = False
 
-    def cycle(self, drives):
+    def cycle(self, drives: int):
 
         self.__snapshot()
 
@@ -80,7 +80,7 @@ class MeanFieldSandpile:
                 self._relax_pile()
             self.avalanche_sizes.append(current_avalanche_size)
 
-    def make_gif(self, path, file_name):
+    def make_gif(self, path: str, file_name: str):
 
         self._frame_list[0].save(
             f"{path}/{file_name}.gif",
@@ -91,7 +91,7 @@ class MeanFieldSandpile:
             loop=0,
         )
 
-    def make_frames(self, path):
+    def make_frames(self, path: str):
 
         x = 0
 
