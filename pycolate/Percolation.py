@@ -40,7 +40,9 @@ class Percolation:
 
         prob = occupationProb  # This just makes the next line more compact.
 
-        self.config = np.random.choice(
+        rng = np.random.default_rng() #Numpys RNG.
+
+        self.config = rng.choice(
             [0, 1], p=[1 - prob, prob], size=(width, height)
         )  # A numpy array, 1=occupied, 0=unoccupied.
 
@@ -338,4 +340,29 @@ class PercolationExperiment:
 
 if __name__ == "__main__":
 
-    pass
+    from math import log
+    import scipy.stats
+    lower = 500
+    higher = 1000
+    lengths = range(lower,higher)
+    percolating_cluster_sizes = []
+    current = 1
+    for length in lengths:
+        for _ in range(0,10):
+            successful = False
+            sample = []
+            while not successful:
+                p = Percolation(length,length,CRIT_PROB)
+                p.cluster_find()
+                if p.percolated:
+                    sample.append(p.percolated_size)
+                    successful = True
+        print(current/(higher - lower))
+        percolating_cluster_sizes.append(np.mean(sample))
+        current += 1
+        
+    x = [log(i) for i in lengths]
+    y = [log(i) for i in percolating_cluster_sizes]
+    import matplotlib.pyplot as plt 
+    plt.loglog(x,y,'.')
+    plt.show()
