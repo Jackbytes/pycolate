@@ -57,7 +57,7 @@ import pycolate
 
 perc = pycolate.Percolation(1000,1000,0.6)
 
-perc.site_site = 1
+perc.site_size = 1
 perc.cluster_find()
 perc.pretty_clusters()
 perc.display() 
