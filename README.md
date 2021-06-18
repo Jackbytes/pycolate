@@ -37,7 +37,7 @@ Perc.display()
 To save the illsutration we run:
 ```python
 ...
-Perc.save()
+Perc.save("PATH")
 ```
 So to generate an illustration of a 50x50 grid where each square has a 0.6 chance of being occupied:
 ```python
